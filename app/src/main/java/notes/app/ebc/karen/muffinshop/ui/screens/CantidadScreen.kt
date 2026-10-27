@@ -1,18 +1,23 @@
 
 package notes.app.ebc.karen.muffinshop.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import notes.app.ebc.karen.muffinshop.R
+import notes.app.ebc.karen.muffinshop.model.Paso
 import notes.app.ebc.karen.muffinshop.model.PedidoUiState
 
 @Composable
@@ -24,11 +29,23 @@ fun CantidadScreen(
 ) {
     Column(
         modifier = Modifier.padding(20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+
+        // Imagen de cantidad
+        Image(
+            painter = painterResource(
+                id = R.drawable.muffin_07
+            ),
+            contentDescription = "Cantidad de muffins",
+            modifier = Modifier.size(140.dp)
+        )
+
         Text(text = "Elige la cantidad de muffins")
         Text(text = "Puedes pedir entre 1 y 12 muffins.")
 
+        // Selector de cantidad
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -55,19 +72,26 @@ fun CantidadScreen(
             }
         }
 
-        Text(text = "Precio unitario: $${state.precioUnitario} MXN")
-        Text(text = "Subtotal: $${state.total} MXN")
+        // Precios
+        Text(
+            text = "Precio unitario: $${state.precioUnitario} MXN"
+        )
 
+        Text(
+            text = "Subtotal: $${state.total} MXN"
+        )
+
+        // Navegación
         Button(
             onClick = onContinuar,
-            enabled = state.esValido(
-                notes.app.ebc.karen.muffinshop.model.Paso.CANTIDAD
-            )
+            enabled = state.esValido(Paso.CANTIDAD)
         ) {
             Text("Continuar")
         }
 
-        OutlinedButton(onClick = onRegresar) {
+        OutlinedButton(
+            onClick = onRegresar
+        ) {
             Text("Regresar")
         }
     }
