@@ -8,14 +8,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import notes.app.ebc.karen.muffinshop.R
 import notes.app.ebc.karen.muffinshop.model.PedidoUiState
 
@@ -24,6 +28,10 @@ fun ExitoScreen(
     state: PedidoUiState,
     onNuevoPedido: () -> Unit
 ) {
+    val composicion by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(R.raw.pedido_exitoso)
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,49 +42,47 @@ fun ExitoScreen(
             Alignment.CenterVertically
         )
     ) {
+        LottieAnimation(
+            composition = composicion,
+            iterations = 1,
+            modifier = Modifier.size(150.dp)
+        )
 
-        // Imagen de confirmación
         Image(
             painter = painterResource(
                 id = R.drawable.muffin_05
             ),
-            contentDescription = "Pedido confirmado correctamente",
-            modifier = Modifier.size(180.dp)
+            contentDescription = "Muffin de pedido confirmado",
+            modifier = Modifier.size(150.dp)
         )
 
-        // Mensaje principal
         Text(
             text = "¡Pedido confirmado!",
             style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center
         )
 
-        // Agradecimiento personalizado
         Text(
             text = "Gracias por tu compra, ${state.nombre}.",
             textAlign = TextAlign.Center
         )
 
-        // Cantidad
         Text(
             text = "Cantidad de muffins: ${state.cantidad}",
             textAlign = TextAlign.Center
         )
 
-        // Total
         Text(
             text = "Total del pedido: $${state.total} MXN",
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center
         )
 
-        // Mensaje informativo
         Text(
             text = "Tu pedido se registró en esta sesión de la aplicación.",
             textAlign = TextAlign.Center
         )
 
-        // Nuevo pedido
         Button(
             onClick = onNuevoPedido
         ) {
